@@ -15,12 +15,13 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp" , {
 
 async function seedFunction() {
     await Campground.deleteMany({});
-    for (let i = 0 ; i < 50 ; i++) {
+    for (let i = 0 ; i < 30 ; i++) {
+        const price = Math.trunc(Math.random() * 50) + 1;
         const title1 = seedHelpers.descriptors[Math.trunc(Math.random() * seedHelpers.descriptors.length)];
         const title2 = seedHelpers.places[Math.trunc(Math.random() * seedHelpers.places.length)];
         const title = `${title1} ${title2}`;
         const location = `${cities[Math.trunc(Math.random() * cities.length)].city}, ${cities[Math.trunc(Math.random() * cities.length)].state}`;
-        const newSite = new Campground({title : title , location : location});
+        const newSite = new Campground({title : title , location : location , image : "https://picsum.photos/1200/800" , price , description : "Nice Camping Place!!"});
         await newSite.save();
     }
 }

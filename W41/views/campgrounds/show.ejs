@@ -1,31 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= campground.title %></title>
-</head>
-<body>
-    <h1><%= campground.title %> </h1>
-    <h2><%= campground.location %></h2>
-
-    <p>
-        <form action="/campgrounds" method="GET">
-            <button type="submit">Show All Camp Sites</button>
-        </form>
-    </p>
-
-    <p>
-        <form action="/campgrounds/<%= campground._id %>/update">
-            <button type="submit">Update the info</button>
-        </form>
-    </p>
-
-    <p>
-        <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-            <button type="submit">Delete This CampSite</button>
-        </form>
-    </p>
-</body>
-</html>
+<% layout("layouts/boilerplate") %>
+    <div class="card mx-auto" style="width: 70%;">
+        <img class="card-img-top image-fluid" src="https://picsum.photos/1200/800" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= campground.title %></h5>
+          <p class="card-text"><%= campground.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-muted"><%= campground.location %></li>
+          <li class="list-group-item">$ <%= campground.price %> / per night</li>
+        </ul>
+        <div class="card-body">
+          <a href="/campgrounds" class="card-link btn btn-primary">Show All Camp Sites</a>
+          <a href="/campgrounds/<%= campground._id %>/update" class="card-link btn btn-info">Update Information</a>
+          <form class="btn mb-1" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger" type="submit">Delete This CampSite</button>
+          </form>
+        </div>
+      </div>
+      

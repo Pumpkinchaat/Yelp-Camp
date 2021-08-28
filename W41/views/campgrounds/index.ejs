@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
-<body>
-    <h1>List of all Campgrounds</h1>
+<% layout("layouts/boilerplate") %> 
+<h1 class="text-center">List of all Campgrounds</h1>
 
-    <form action="/campgrounds/new" method="GET">
-    <button type="submit">Create New CampSite</button>
-    </form>
+<form action="/campgrounds/new" method="GET">
+  <button class="btn btn-primary mb-1" type="submit">Create New CampSite</button>
+</form>
 
-    <ul>
-        <% for(let cp of campgrounds) {%>
-        <a href="/campgrounds/<%= cp._id %>"><li><%= cp.title%></li></a>
-        <% }%> 
-    </ul>
-    
-</body>
-</html>
+<ul>
+  <% for(let cp of campgrounds) {%>
+    <div class="card mx-auto mb-1" style="width: 50%;">
+      <img class="card-img-top image-fluid" src="https://picsum.photos/1200/800" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><%= cp.title%></h5>
+        <p class="card-text"><%= cp.description %></p>
+        <a href="/campgrounds/<%= cp._id %>" class="btn btn-primary">View More</a>
+      </div>
+    </div>
+  <% }%>
+</ul>

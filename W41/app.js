@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const ejsMate = require("ejs-mate");
 const path = require("path");
 const methodOverride = require("method-override");
 const Campground = require("./models/campgrounds");
@@ -14,6 +15,7 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp" , {
 .then(()=>{console.log("MONGO DB IS CONNECTED")})
 .catch(err => {console.log(err)});
 
+app.engine("ejs" , ejsMate);
 app.set("view engine" , "ejs");
 app.set("views" , path.join(__dirname , "views"));
 
@@ -57,6 +59,9 @@ app.put("/campgrounds/:id" , async (req , res) => {
     const campground = await Campground.findById(id);
     campground.title = req.body.campground.title;
     campground.location = req.body.campground.location;
+    campground.price = req.body.campground.price;
+    campground.description = req.body.campground.description;
+    campground.image = req.body.campground.image;
     await campground.save();
     res.redirect(`/campgrounds/${id}`);
 })
