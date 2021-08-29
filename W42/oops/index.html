@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+  </head>
+  <body></body>
+
+  <script>
+      class Person {
+          constructor(name , age) {
+              this.name = name;
+              this.age = age;
+          };
+
+          speak() {
+              return `Hi my name is ${this.name} and my age is ${this.age}`;
+          }
+      };
+
+      class Student extends Person {
+          constructor(name , age , marks , school) {
+              super(name , age);
+              this.marks = marks;
+              this.school = school;
+          };
+
+          intro() {
+              return `Hi The name of my school is ${this.school} and my percentage is ${this.marks}`;
+          }
+      };
+
+      const sunil = new Person("Sunil" , 55);
+      const susmit = new Student("Susmit" , 20 , 99 , "VIT V");
+
+      console.log(sunil.speak());
+      console.log(susmit.speak());
+      console.log(susmit.intro());
+  </script>
+</html>
