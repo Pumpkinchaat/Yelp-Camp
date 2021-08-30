@@ -1,30 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Data</title>
-</head>
-<body>
-    <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
-    <p>
-        <label for="title">Title</label>
-        <input type="text" id="title" name="campground[title]" value="<%= campground.title %>">
-    </p>
+<% layout("layouts/boilerplate") %> 
+    <h1 class="text-center">Update the form</h1>
 
-    <p>
-        <label for="location">Location</label>
-        <input type="text" id="location" name="campground[location]" value="<%= campground.location %>">
-    </p>
-
-    <button type="submit">Make Changes</button>
-    </form>
-
-    <p>
-        <form action="/campgrounds/<%= campground._id %>">
-            <button type="submit">Go Back</button>
-        </form>
-    </p>
-</body>
-</html>
+    <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" class="mx-auto validated-form" style="width: 70%;" novalidate>
+        <div class="form-group mb-2">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" name="campground[title]" value="<%= campground.title %>" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" name="campground[location]" value="<%= campground.location %>" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-auto">
+            <label class="sr-only" for="inlineFormInputGroup">Price</label>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input type="text" class="form-control" id="inlineFormInputGroup" name="campground[price]" value="<%= campground.price %> " required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+        </div>
+        <div class="form-group mb-2">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="campground[description]" value="<%= campground.description %>" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+        </div>
+        <div class="form-group mb-2">
+            <label for="image">Image Source</label>
+            <input type="text" class="form-control" id="image" name="campground[image]" value="<%= campground.image %>" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success mb-1">Make Changes</button>
+        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary mb-1"> Go Back</a>
+      </form>
+      
+      
