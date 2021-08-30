@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Camp Site</title>
+</head>
+<body>
+    <form action="/campgrounds" method="POST">
+    <p>
+        <label for="title">Name of the Camp Ground</label>
+        <input type="text" id="title" name="campground[title]">
+    </p>
+
+    <p>
+        <label for="location">Location of Camp Ground</label>
+        <input type="text" id="location" name="campground[location]">
+    </p>
+
+    <button type="submit">Submit</button>
+    </form>
+
+    <p>
+        <form action="/campgrounds">
+            <button type="submit">Show All Campgrounds</button>
+        </form>
+    </p>
+</body>
+</html>
