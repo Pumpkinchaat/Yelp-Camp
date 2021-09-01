@@ -5,6 +5,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Product = require("./models/products"); //getting the Product model
+const Farm = require("./models/farm"); //getting the farm model
 
 mongoose
   .connect("mongodb://localhost:27017/farmStand", {
@@ -28,18 +29,64 @@ app.use(methodOverride("_method"));
 const categories = ["fruits", "vegetables", "dairy"];
 
 app.get("/", (req, res) => {
-  res.redirect("/products");
+  res.render("home");
 });
+
+//FARM ROUTES
+
+app.get("/farms" , async (req , res) => {
+  const farms = await Farm.find({});
+  console.log(farms);
+  res.render("farms/index" , {farms});
+})
+
+app.get("/farms/new" , (req , res) => {
+  res.render("farms/new");
+})
+
+app.post("/farms" , async (req , res) => {
+  const newFarm = new Farm(req.body.farm);
+  await newFarm.save();
+  res.redirect("/farms");
+})
+
+app.get("/farms/:id" , async (req , res) => {
+  const {id} = req.params;
+  const farm = await Farm.findById(id).populate("products");
+  res.render("farms/show" , {farm});
+})
+
+app.post("/farms/:id" , async(req , res) => {
+  const farm = await Farm.findById(req.params.id);
+  const product = req.body.product;
+  const newProduct = new Product(product);
+  farm.products.push(newProduct);
+  await farm.save();
+  newProduct.farm = farm;
+  await newProduct.save();
+  console.log(farm);
+  console.log(newProduct);
+  res.redirect("/farms");
+})
+
+app.get("/farms/:id/new" , async (req , res) => {
+  const {id} = req.params;
+  const farm = await Farm.findById(id);
+  console.log(farm);
+  res.render("products/new" , {farm});
+  Farm.find
+})
+
+app.delete("/farms/:id" , async (req , res) => {
+  const farm = await Farm.findById(req.params.id);
+  await Farm.findByIdAndDelete(req.params.id);
+  res.redirect("/");
+})
+//PRODUCT ROUTES
 
 app.get("/products", async (req, res) => {
   const products = await Product.find({});
   res.render("products/index", { products });
-});
-
-app.post("/products", (req, res) => {
-  const newProduct = new Product(req.body);
-  newProduct.save();
-  res.redirect("/products");
 });
 
 app.get("/products/new", (req, res) => {

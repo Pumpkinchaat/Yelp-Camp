@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new Farm</title>
+</head>
+<body>
+    <form action="/farms" method="POST">
+        <input type="text" name="farm[name]" placeholder="Add Farm Name" id="name">
+        <br>
+        <input type="text" name="farm[owner]" placeholder="Add Farm Owner" id="owner">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <a href="/farms">Go back to all farms page</a>
+    <br>
+</body>
+</html>
