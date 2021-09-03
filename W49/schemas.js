@@ -1,3 +1,7 @@
+// This is the verification schema file
+// this is powered by Joi npm package
+
+const { fileLoader } = require('ejs')
 const Joi = require('joi');
 
 module.exports.campgroundSchema = Joi.object({
