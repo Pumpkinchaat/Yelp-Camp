@@ -31,43 +31,48 @@
   </div>
 
   <div class="col-6">
-    <form class="mb-3 validated-form" action="/campgrounds/<%= campground._id %>/review" method="POST" novalidate>
-      <h3 class="mb-3">Enter Your Review</h3>
-    <div class="form-group mb-3">
-      <label for="rating">Select Rating</label>
-      <input
-        type="range"
-        min="1"
-        max="5"
-        step="1"
-        class="form-control-range"
-        id="rating"
-        name="review[rating]"
-        style="display: block; width: 100%"
-        required
-      />
-    </div>
-  
-    <div class="form-group mb-3">
-      <label for="review">Enter Your Review Here</label>
-      <textarea
-        class="form-control"
-        id="review"
-        name="review[body]"
-        rows="3"
-        required
-      ></textarea>
-      <div class="valid-feedback">
-          Looks good!
-        </div>
-        <div class="invalid-feedback">
-          Please Enter a Review
-        </div>
-    </div>
-  
-    <button class="btn btn-success mb-3" type="submit">Submit Review</button>
-  </form>
-
+    <% if (authBool) {%>
+      <form class="mb-3 validated-form" action="/campgrounds/<%= campground._id %>/review" method="POST" novalidate>
+        <h3 class="mb-3 text-center">Enter Your Review</h3>
+      <div class="form-group mb-3">
+        <label for="rating">Select Rating</label>
+        <input
+          type="range"
+          min="1"
+          max="5"
+          step="1"
+          class="form-control-range"
+          id="rating"
+          name="review[rating]"
+          style="display: block; width: 100%"
+          required
+        />
+      </div>
+    
+      <div class="form-group mb-3">
+        <label for="review">Enter Your Review Here</label>
+        <textarea
+          class="form-control"
+          id="review"
+          name="review[body]"
+          rows="3"
+          required
+        ></textarea>
+        <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Enter a Review
+          </div>
+      </div>
+    
+      <button class="btn btn-success mb-3" type="submit">Submit Review</button>
+    </form>
+    <% } else { %>
+      <h4 class="text-center"><a href="/login">Login</a> / <a href="/register">Register</a> to post reviews</h4>
+    <% } %> 
+    
+  <h3 class="text-center">Reviews</h3>
   <% for (let review of campground.reviews) {%>
   <div class="card mb-3" style="width: 100%;">
     <div class="card-body">

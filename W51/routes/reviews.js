@@ -6,6 +6,7 @@ const Campground = require('../models/campground');
 const Review = require("../models/reviews");
 const flash = require("connect-flash");
 const ExpressError = require('../utils/ExpressError');
+const {isLoggedIn} = require("../middleware");
 
 const validateReview = (req , res , next) => {
     const {error} = reviewSchema.validate(req.body);
@@ -17,7 +18,7 @@ const validateReview = (req , res , next) => {
     }
 }
 
-Router.post("/" , validateReview , catchAsync(async (req,  res) => {
+Router.post("/" , isLoggedIn , validateReview , catchAsync(async (req,  res) => {
     const {id} = req.params;
     const {review} = req.body;
     const campground = await Campground.findById(id);
@@ -34,7 +35,7 @@ Router.post("/" , validateReview , catchAsync(async (req,  res) => {
     res.redirect(`/campgrounds/${id}`);
 }));
 
-Router.delete("/:reviewId" , async(req , res) => {
+Router.delete("/:reviewId" , isLoggedIn , async(req , res) => {
     const {id , reviewId} = req.params;
     const campground = await Campground.findById(id);
     if (!campground) {
