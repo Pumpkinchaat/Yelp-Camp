@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {Schema , model} = mongoose;
+const User = require("./users");
 
 const reviewSchema = new Schema({
     body : {
@@ -15,6 +16,10 @@ const reviewSchema = new Schema({
     campground : {
         type : Schema.Types.ObjectId,
         ref : "Campground"
+    },
+    author : {
+        type : Schema.Types.ObjectId,
+        ref : "User"
     }
 });
 

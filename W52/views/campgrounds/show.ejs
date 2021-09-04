@@ -10,22 +10,25 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted"><%= campground.location%></li>
+        <li class="list-group-item">By - <%= campground.author.username%></li>
         <li class="list-group-item">$<%= campground.price%>/night</li>
       </ul>
-      <div class="card-body">
-        <a
-          class="card-link btn btn-info"
-          href="/campgrounds/<%=campground._id%>/edit"
-          >Edit</a
-        >
-        <form
-          class="d-inline"
-          action="/campgrounds/<%=campground._id%>?_method=DELETE"
-          method="POST"
-        >
-          <button class="btn btn-danger">Delete</button>
-        </form>
-      </div>
+      <% if (user && campground.author._id.equals(user._id)) {%>
+        <div class="card-body">
+          <a
+            class="card-link btn btn-info"
+            href="/campgrounds/<%=campground._id%>/edit"
+            >Edit</a
+          >
+          <form
+            class="d-inline"
+            action="/campgrounds/<%=campground._id%>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      <% } %> 
       <div class="card-footer text-muted">2 days ago</div>
     </div>
   </div>
@@ -71,16 +74,20 @@
     <% } else { %>
       <h4 class="text-center"><a href="/login">Login</a> / <a href="/register">Register</a> to post reviews</h4>
     <% } %> 
-    
-  <h3 class="text-center">Reviews</h3>
+  
+  <% if (campground.reviews.length) {%> 
+    <h3 class="text-center">Reviews</h3>
+  <% } %> 
   <% for (let review of campground.reviews) {%>
   <div class="card mb-3" style="width: 100%;">
     <div class="card-body">
       <h5 class="card-title"><%= review.rating %></h5>
       <p class="card-text"><%= review.body %></p>
-      <form action="/campgrounds/<%= campground._id %>/review/<%= review._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger" type="submit">Delete</button>
-      </form>
+      <% if (review.author._id.equals(user._id)) {%>
+        <form action="/campgrounds/<%= campground._id %>/review/<%= review._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      <% } %> 
     </div>
   </div>
   <% } %> 
