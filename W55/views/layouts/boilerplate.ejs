@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YelpCamp</title>
+    <link rel="stylesheet" href="/styles/bootstrap.min.css">
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar')%>
+
+    <% if(success && success.length) {%>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= success %> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %>
+
+    <% if(fail && fail.length) {%>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= fail %> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <% } %> 
+
+    <main class="container mt-5">
+        <%- body %>
+    </main>
+    <%- include('../partials/footer')%>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/formValidator.js"></script>
+</body>
+
+</html>
