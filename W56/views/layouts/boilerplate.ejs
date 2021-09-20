@@ -12,7 +12,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
 </head>
 
-<body class="d-flex flex-column vh-100">
+<body class="d-flex flex-column" style="min-height: 100vh;">
     <%- include('../partials/navbar')%>
 
     <% if(success && success.length) {%>
@@ -31,6 +31,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
+    <% } %> 
+
+    <% if (path === '/campgrounds') { %> 
+        <div id="map" style="height: 300px; width: 100%;"></div>    
     <% } %> 
 
     <main class="container mt-5">

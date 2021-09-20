@@ -15,6 +15,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const {User} = require("./models/users");
+const Campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     useNewUrlParser: true,
@@ -58,6 +59,7 @@ passport.deserializeUser(User.deserializeUser());
 passport.use(User.createStrategy());
 
 app.use((req , res , next) => {
+    res.locals.path = req.path;
     res.locals.user = req.user;
     res.locals.success = req.flash("success");
     res.locals.fail = req.flash("fail");
@@ -67,6 +69,22 @@ app.use((req , res , next) => {
 app.get('/', (req, res) => {
     res.redirect("/campgrounds");
 });
+
+app.get("/internalApi" , async (req , res) => {
+    const data = (await Campground.find({})).map(function(cg) {
+        return {
+            type: "Feature",
+            geometry: cg.geometry,
+            properties: {
+                title: cg.title,
+                location: cg.location,
+                id: cg._id
+            }
+        }
+    });
+    const responseBody = { features: [...data] };
+    res.json(responseBody);
+})
 
 app.use("/" , usersRoute);
 app.use("/campgrounds" , campgroundRoute);
