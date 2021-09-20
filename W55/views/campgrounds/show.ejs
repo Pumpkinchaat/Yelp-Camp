@@ -1,6 +1,14 @@
 <% layout('layouts/boilerplate')%>
 <link rel="stylesheet" href="/styles/ratingStars.css">
 
+<script>
+  const accessToken = '<%- accessToken %>';
+  const lng = '<%- campground.geometry.coordinates[0] %>';
+  const lot = '<%- campground.geometry.coordinates[1] %>';
+  const tits = '<%- campground.title %>';
+  const loca = '<%- campground.location %>';
+</script>
+
 <div class="row">
   <div class="col-6">
     <div class="card mb-3">
@@ -52,6 +60,7 @@
   </div>
 
   <div class="col-6">
+    <div class="mb-3" id="map" style="height: 300px; width: 100%;"></div>
     <% if (authBool) {%>
       <form class="mb-3 validated-form" action="/campgrounds/<%= campground._id %>/review" method="POST" novalidate>
         <h3 class="mb-3 text-center">Enter Your Review</h3>
@@ -117,3 +126,22 @@
 
   </div>
 </div>
+
+<script>
+	mapboxgl.accessToken = accessToken;
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [lng , lot],
+    zoom: 15
+  });
+
+  const marker1 = new mapboxgl.Marker()
+    .setLngLat([lng, lot])
+    .addTo(map);
+
+  const popup = new mapboxgl.Popup({ closeOnClick: false , offset: 25 })
+    .setLngLat([lng, lot])
+    .setHTML(`<h5>${tits}</h5><p>${loca}</p>`)
+    .addTo(map);
+</script>

@@ -13,6 +13,10 @@ module.exports.campgroundSchema = Joi.object({
             filename: Joi.string().required()
         }),
         location: Joi.string().required(),
+        geometry: Joi.object({
+            type: Joi.string().required(),
+            coordinates: Joi.array().items(Joi.number()).required()
+        }),
         author: Joi.string(),
         description: Joi.string().required()
     }).required(),

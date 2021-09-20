@@ -1,3 +1,8 @@
+require("dotenv").config();
+
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
@@ -24,9 +29,14 @@ const seedDB = async () => {
     for (let i = 0; i < 20; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
+        const geoData = await geocoder.forwardGeocode({
+            query: `${cities[random1000].city}, ${cities[random1000].state}`,
+            limit: 1
+        }).send();
         const camp = new Campground({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
+            geometry: geoData.body.features[0].geometry,
             image: [
                 {
                   url: 'https://res.cloudinary.com/dug6rssoa/image/upload/v1632054262/Yelp-Camp/vexcy9yzasgmsurxuo0f.jpg',
@@ -37,7 +47,7 @@ const seedDB = async () => {
                   filename: 'Yelp-Camp/yeistwdclsowm6ebkfba'
                 }
             ],
-            author: '61335ea7855c8811648cd53c',
+            author: '61335ea7855c8811648cd53c', //this is the admin author {test1}
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dolores vero perferendis laudantium, consequuntur voluptatibus nulla architecto, sit soluta esse iure sed labore ipsam a cum nihil atque molestiae deserunt!',
             price
         })
