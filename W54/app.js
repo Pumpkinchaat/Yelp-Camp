@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV != 'production') {
+    require("dotenv").config();
+}
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -10,7 +14,6 @@ const usersRoute = require("./routes/users");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const passportLocal = require("passport-local");
 const {User} = require("./models/users");
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
@@ -26,6 +29,8 @@ db.once("open", () => {
 });
 
 const app = express();
+
+mongoose.set('useFindAndModify', false);
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
@@ -77,6 +82,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(3000, () => {
-    console.log('Serving on port 3000')
+app.listen(process.env.PORT, () => {
+    console.log(`Serving on port ${process.env.PORT}`)
 })
