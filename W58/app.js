@@ -16,8 +16,9 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const {User} = require("./models/users");
 const Campground = require('./models/campground');
+const helmet = require('helmet');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect((process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'), {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -50,15 +51,22 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }));
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+);
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.use(User.createStrategy());
 
 app.use((req , res , next) => {
+    res.locals.mode = process.env.NODE_ENV;
     res.locals.path = req.path;
     res.locals.user = req.user;
     res.locals.success = req.flash("success");
