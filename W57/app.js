@@ -67,7 +67,7 @@ app.use((req , res , next) => {
 })
 
 app.get('/', (req, res) => {
-    res.redirect("/campgrounds");
+    res.render("home");
 });
 
 app.get("/internalApi" , async (req , res) => {

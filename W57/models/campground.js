@@ -50,6 +50,10 @@ const CampgroundSchema = new Schema({
     ]
 });
 
+CampgroundSchema.virtual("descp").get(function() {
+    return `${this.description.substring(0 , 20)}....`;
+})
+
 CampgroundSchema.post("findOneAndDelete" , async function (campground) {
     for (let reviewId of campground.reviews) {
         await Review.findByIdAndDelete(reviewId);

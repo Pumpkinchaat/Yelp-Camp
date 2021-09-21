@@ -10,7 +10,7 @@
 </script>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <div class="card mb-3">
       <div id="CampgroundImages" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="col-md-6">
     <div class="mb-3" id="map" style="height: 300px; width: 100%;"></div>
     <% if (authBool) {%>
       <form class="mb-3 validated-form" action="/campgrounds/<%= campground._id %>/review" method="POST" novalidate>
@@ -144,4 +144,6 @@
     .setLngLat([lng, lot])
     .setHTML(`<h5>${tits}</h5><p>${loca}</p>`)
     .addTo(map);
+
+    map.addControl(new mapboxgl.NavigationControl());
 </script>
